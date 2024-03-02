@@ -51,7 +51,33 @@ contract NumberStorage {
 
     Users[] public users;
 
-    function addPerson(string memory _username, string memory _accountNumber) public {
+
+    //calldata, memory - variable jest tylko chwilowo, kiedy się kod uruchamia
+    //storage istnieje może nawet widnieć poza func 
+    //calldata chwilowa zmienna, niemodyfikowalna
+    //memory chwilowa zmienna modyfikowalna
+
+    //te zmienne dodają tylko się do arrays i strings, structs, mappings
+
+    //np
+
+    // function addAnothrPerson(string calldata _username, string calldata _accountNumber) public {
+    //     // nie można teraz przypisać do username żadnej zmiennej 
+    //     users.push(Users(_username, _accountNumber));
+    // } 
+    
+    // function addPerson(string memory _username, string memory _accountNumber, uint256 _id)  public {
+    //     _username = "twoja stara";
+    //     users.push(Users(_username, _accountNumber));
+    //     nameToId[_username] = _id;
+    // }
+
+    mapping(string => uint256) public nameToId;
+    function addPerson(string calldata _username, string calldata _accountNumber, uint256 _id)  public {
         users.push(Users(_username, _accountNumber));
+        nameToId[_username] = _id;
     }
+   
+
+
 }
