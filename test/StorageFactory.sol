@@ -40,5 +40,4 @@ contract InheritAccStorage is AccountStorage {
     function getUser(uint _index) public view override returns (User memory) {
         // return smth added
     }
-    
 }
