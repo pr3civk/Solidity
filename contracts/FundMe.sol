@@ -19,6 +19,7 @@ contract FundMe {
     mapping(address => uint256) public addressToAmoutFunded;
     // immutable -> variables that cannot be changed once they have been assigned a
     // value and can only be set during contract deployment
+
     address public immutable owner;
 
     constructor() {
