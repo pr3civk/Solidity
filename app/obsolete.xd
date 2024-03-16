@@ -1,0 +1,131 @@
+// // async function main() {
+// //   // We get the contract to deploy
+// //   const provider = new ethers.JsonRpcProvider(
+// //     "http://127.0.0.1:7545"
+// //   );
+// //   const wallet = new ethers.Wallet("0x148e1b0cecbc79f37fad3b0085286cb8594c411dca0beecc453d7db9b30d4ae5", provider);
+// //   const abi = fs.readJsonSync("./contracts_Test_sol_TestStorage.abi", "utf8");
+// //   const binary = fs.readFileSync("./contracts_Test_sol_TestStorage.bin", "utf8");
+// //   const contractFactory = new ethers.ContractFactory(abi, binary, wallet);
+// //   console.log("Deploying contract");
+// //   const contract = await contractFactory.deploy({
+// //     gasLimit: 2000000,
+// //   }); // Stop tutaj i czekaj aż contract zostanie zdeployowany
+// //   console.log(contract);
+// //   const deploymentReveipt = await contract.deployedTramsaction.wait(1);
+// // }
+
+// const provider = new ethers.JsonRpcProvider(process.env.INFURA_URL);
+// const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_ETHER, provider);
+// async function deployContract() {
+//     const abi = fs.readJsonSync(
+//         "../compilation/contracts_ShowBalance_sol_ShowBalance.abi",
+//         "utf8",
+//     );
+//     const binary = fs.readFileSync(
+//         "../compilation/contracts_ShowBalance_sol_ShowBalance.bin",
+//         "utf8",
+//     );
+
+//     const contractFactory = new ethers.ContractFactory(abi, binary, wallet);
+//     console.log("Deploying contract...");
+
+//     try {
+//         const contract = await contractFactory.deploy(); // Tutaj możesz dodać konstruktor args jeśli są potrzebne
+//         await contract.deployTransaction(); // Dodano czekanie na zakończenie deployowania
+//         console.log(`Contract deployed to: ${contract.address}`);
+//         return contract.address; // Zwraca adres zdeployowanego kontraktu
+//     } catch (error) {
+//         console.error("Error deploying contract:", error);
+//         return null; // Zwraca null w przypadku błędu
+//     }
+// }
+// async function getContractBalance(contractAddress) {
+//     const provider = new ethers.JsonRpcProvider(process.env.INFURA_URL);
+//     const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_ETHER, provider);
+
+//     // Załaduj ABI kontraktu
+//     const abi = fs.readJsonSync(
+//         "../compilation/contracts_ShowBalance_sol_ShowBalance.abi",
+//         "utf8",
+//     );
+
+//     // Stwórz instancję kontraktu
+//     const contract = new ethers.Contract(contractAddress, abi, wallet);
+
+//     // Tutaj możesz podać adres, którego saldo chcesz sprawdzić
+//     const addressToCheck = process.env.ACCOUNT_ADDRESS_ETHER; // Podmień na właściwy adres
+
+//     // Wywołaj funkcję getBalance
+//     const balance = await contract.getBalance(addressToCheck);
+//     console.log(
+//         `Saldo adresu ${addressToCheck} wynosi: ${ethers.utils.formatEther(balance)} ETH`,
+//     );
+// }
+
+// async function main() {
+//     const contractAddress = await deployContract();
+//     console.log(`Deployed contract address: ${contractAddress}`);
+//     await getContractBalance(contractAddress);
+// }
+
+// main().catch(console.error);
+
+
+
+const provider = new ethers.JsonRpcProvider(process.env.INFURA_URL);
+const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_ETHER, provider);
+
+const senderAddress = "0x24e5a8F1CB4b390D939662c253bd51203Ae7C9d1";
+const recieverAddress = "0xB2C02C2E1f08d17D69a7B71708338987Ba82B1b1";
+
+const abi = fs.readJsonSync(
+    "../compilation/contracts_ShowBalance_sol_ShowBalance.abi",
+    "utf8",
+);
+
+const binary =
+    "6080604052348015600e575f80fd5b506103168061001c5f395ff3fe608060405234801561000f575f80fd5b5060043610610034575f3560e01c8063a9059cbb14610038578063f8b2cb4f14610054575b5f80fd5b610052600480360381019061004d91906101d7565b610084565b005b61006e60048036038101906100699190610215565b610126565b60405161007b919061024f565b60405180910390f35b3373ffffffffffffffffffffffffffffffffffffffff16318111156100de576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016100d5906102c2565b60405180910390fd5b8173ffffffffffffffffffffffffffffffffffffffff166108fc8290811502906040515f60405180830381858888f19350505050158015610121573d5f803e3d5ffd5b505050565b5f8173ffffffffffffffffffffffffffffffffffffffff16319050919050565b5f80fd5b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f6101738261014a565b9050919050565b61018381610169565b811461018d575f80fd5b50565b5f8135905061019e8161017a565b92915050565b5f819050919050565b6101b6816101a4565b81146101c0575f80fd5b50565b5f813590506101d1816101ad565b92915050565b5f80604083850312156101ed576101ec610146565b5b5f6101fa85828601610190565b925050602061020b858286016101c3565b9150509250929050565b5f6020828403121561022a57610229610146565b5b5f61023784828501610190565b91505092915050565b610249816101a4565b82525050565b5f6020820190506102625f830184610240565b92915050565b5f82825260208201905092915050565b7f496e73756666696369656e742062616c616e63652e00000000000000000000005f82015250565b5f6102ac601583610268565b91506102b782610278565b602082019050919050565b5f6020820190508181035f8301526102d9816102a0565b905091905056fea26469706673582212207d5d4cdd2de8bdaca2eaa4a335fb4bbfe280c4519a04549c78f4ecb0c55743a764736f6c63430008190033";
+
+const contractFactory = new ethers.ContractFactory(abi, binary, wallet);
+console.log("Deploying contract...");
+const main = async () => {
+    // console.log(provider);
+    // console.log(wallet);
+    // console.log(senderAddress);
+    // console.log(recieverAddress);
+    // console.log(abi);
+    // console.log(contractFactory);
+
+    const balance = await provider.getBalance(senderAddress);
+    console.log(balance);
+    // try {
+    //     const contract = await contractFactory.deploy(); // Tutaj możesz dodać konstruktor args jeśli są potrzebne
+    //     console.log(`Contract deployed to: ${contract.address}`);
+    //     // const balance = await contract.getBalance(recieverAddress);
+    //     // console.log(
+    //     //     `Saldo adresu ${recieverAddress} wynosi: ${ethers.utils.formatEther(balance)} ETH`,
+    //     // );
+
+    //     const balanceOfSender = await provider.getBalance(senderAddress);
+    //     const balanceOfReciever = await provider.getBalance(recieverAddress);
+        
+    //     console.log(`Saldo nadawcy: ${ethers.utils.formatEther(balanceOfSender)} ETH`);
+    //     console.log(`Saldo odbiorcy: ${ethers.utils.formatEther(balanceOfReciever)} ETH`);
+        
+    //     const contractWithWallet = contract.connect(wallet);
+
+    //     const tx = await contractWithWallet.transfer(recieverAddress, 0.001);
+    //     await tx.wait();
+
+    //     // const balanceOfSender = await contract.getBalance(senderAddress);
+    //     // const balanceOfReciever = await contract.getBalance(recieverAddress);
+
+    //     console.log("Transaction complete");
+    // } catch (error) {
+    //     console.error("Error deploying contract:", error);
+    //     return null; // Zwraca null w przypadku błędu
+    // }
+};
+
+main().catch(console.error);
